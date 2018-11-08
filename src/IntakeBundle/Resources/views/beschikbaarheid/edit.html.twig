@@ -1,0 +1,23 @@
+{% extends '@Intake/base.html.twig' %}
+
+{% block body %}
+    {% if is_granted('ROLE_ADMIN') %}
+        {% if (beschikbaarheid.docentId == app.user) %}
+        <h1>Beschikbaarheid wijzigen</h1>
+
+            {{ form_start(edit_form) }}
+            {{ form_widget(edit_form) }}
+            <input type="submit" value="Save" class="btn btn-success"/>
+            {{ form_end(edit_form) }}
+
+            {{ form_start(delete_form) }}
+            <input type="submit" value="Delete" class="btn btn-danger">
+            {{ form_end(delete_form) }}
+        {% else %}
+            {#else van beschikbaarheid#}
+            <h1>Dit is niet uw beschikbaarheid!</h1>
+        {% endif %}
+    {% else %}
+        {#else van admin#}
+    {% endif %}
+{% endblock %}

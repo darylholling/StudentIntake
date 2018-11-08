@@ -1,0 +1,47 @@
+{% extends '@Intake/base.html.twig' %}
+
+{% block body %}
+    {% if is_granted('ROLE_ADMIN') %}
+        <a class="btn btn-success newitem" href="{{ path('afspraak_new') }}">
+            Nieuwe afspraak aanmaken <i class="fa fa-plus-square"></i></a>
+        <h1>Afspraken overzicht</h1>
+    {% else %}
+        <h1>Mijn intake-afspraak</h1>
+    {% endif %}
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Gebruiker</th>
+            <th>Locatie</th>
+            <th>Opleiding</th>
+            <th>Intaketijd & datum</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for afspraak in afspraaks %}
+            {% if (afspraak.userId == app.user) or is_granted("ROLE_SUPER_ADMIN") %}
+                <tr>
+                    <td><a href="{{ path('afspraak_show', { 'id': afspraak.id }) }}">{{ afspraak.id }}</a></td>
+                    <td>{{ afspraak.userId }}</td>
+                    <td>{{ afspraak.locatieId }}</td>
+                    <td>{{ afspraak.opleidingId }}</td>
+                    <td>{{ afspraak.beschikbaarheidId }}</td>
+                    <td>
+                        <a href="{{ path('afspraak_show', { 'id': afspraak.id }) }}" class="btn btn-info">show</a>
+
+                        <a href="{{ path('afspraak_edit', { 'id': afspraak.id }) }}"
+                           class="btn btn-primary">edit</a>
+                    </td>
+                </tr>
+            {% endif %}
+        {% endfor %}
+        </tbody>
+    </table>
+    {% if is_granted('ROLE_ADMIN') %}
+        <a class="btn btn-success" href="{{ path('afspraak_new') }}">
+            Nieuwe afspraak aanmaken <i class="fa fa-plus-square"></i></a>
+    {% endif %}
+{% endblock %}

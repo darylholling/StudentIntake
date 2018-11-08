@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <title>{% block title %}Welcome!{% endblock %}</title>
+    {% block stylesheets %}{% endblock %}
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}"/>
+    <link rel="stylesheet" href="{{ asset('bundles/intake/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/intake/css/main.css') }}">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css"
+          integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+</head>
+<body>
+{% if is_granted("ROLE_SUPER_ADMIN") %}
+
+    <nav class="navbar navbar-dark fixed-top rlred flex-md-nowrap p-0 shadow">
+        <a class="navbar-brand col-sm-3 col-md-2 mr-0 rlpurple">
+            {% if app.user %}
+                Hallo {{ app.user | capitalize }}
+            {% endif %}
+        </a>
+        <ul class="navbar-nav px-3">
+            <li class="nav-item text-nowrap">
+                {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                    <a class="nav-link" href="{{ path('fos_user_security_logout') }}"><i class="fa fa-sign-out-alt"></i>
+                        Logout</a>
+                {% else %}
+                    <a class="nav-link" href="{{ path('fos_user_security_login') }}"><i class="fa fa-sign-out-alt"></i>
+                        Login</a>
+                {% endif %}
+            </li>
+        </ul>
+    </nav>
+<div class="container-fluid">
+    <div class="row">
+        <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+            <div class="sidebar-sticky">
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">
+                            <i class="fa fa-home"></i>
+                            Home <span class="sr-only"></span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('opleiding_index') }}">
+                            <i class="fa fa-graduation-cap"></i>
+                            Opleidingen
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('afdeling_index') }}">
+                            <i class="fa fa-building"></i>
+                            Afdelingen
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('locatie_index') }}">
+                            <i class="fa fa-map-marker"></i>
+                            Locaties
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('beschikbaarheid_index') }}">
+                            <i class="fa fa-user-clock"></i>
+                            Beschikbaarheid
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('afspraak_index') }}">
+                            <i class="fa fa-calendar-check"></i>
+                            Afspraken
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('user_index') }}">
+                            <i class="fa fa-user"></i>
+                            Gebruikers
+                        </a>
+                    </li>
+
+                </ul>
+            </div>
+        </nav>
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom"></div>
+
+
+            {% else %}
+                <nav class="navbar navbar-expand-md navbar-light bg-light mb-4">
+                    <a class="navbar-brand" href="/">mbo<b>rijn</b><i style="color:red;">//</i><b>land</b></a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
+                            aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarCollapse">
+                        <ul class="navbar-nav mr-auto">
+                            <li class="nav-item">
+                                <a class="nav-link" href="/">Home</a>
+                            </li>
+                            {% if is_granted("IS_AUTHENTICATED_FULLY") %}
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ path('inschrijven_new') }}">Inschrijven</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ path('afspraak_index') }}">Mijn intake</a>
+                                </li>
+                            {% endif %}
+                        </ul>
+                        <ul class="navbar-nav px-3">
+                            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                            <li class="nav-item text-nowrap">
+                                <a class="nav-link" href="{{ path('profile_show', { 'id': app.user.id }) }}"><i
+                                            class="fa fa-user"></i>
+                                    Profile</a>
+                            </li>
+                            <li class="nav-item text-nowrap">
+                                <a class="nav-link" href="{{ path('fos_user_security_logout') }}"><i
+                                            class="fa fa-sign-out-alt"></i>
+                                    Logout</a>
+                                {% else %}
+                                    <a class="nav-link" href="{{ path('fos_user_security_login') }}"><i
+                                                class="fa fa-sign-out-alt"></i>
+                                        Login</a>
+                                {% endif %}
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+
+            {% endif %}
+
+            {% block body %}
+            {% endblock %}
+        </main>
+    </div>
+</div>
+
+{% block javascripts %}{% endblock %}
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script>window.jQuery || document.write('<script src="../../../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
+<script src="{{ asset('bundles/shop/js/bootstrap.min.js') }}"></script>
+</body>
+</html>

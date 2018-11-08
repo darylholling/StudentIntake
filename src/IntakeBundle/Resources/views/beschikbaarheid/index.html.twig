@@ -1,0 +1,82 @@
+{% extends '@Intake/base.html.twig' %}
+
+{% block body %}    {% if is_granted('ROLE_ADMIN') %}
+    <a class="btn btn-success newitem" href="{{ path('beschikbaarheid_new') }}">
+        Nieuwe beschikbaarheid aanmaken <i class="fa fa-plus-square"></i></a>
+    <h1>Mijn beschikbaarheden</h1>
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Docent</th>
+            <th>Datum</th>
+            <th>Tijd</th>
+            <th>Duur</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for beschikbaarheid in beschikbaarheids %}
+            {% if (beschikbaarheid.docentId == app.user) %}
+
+                <tr>
+                    <td>
+                        <a href="{{ path('beschikbaarheid_show', { 'id': beschikbaarheid.id }) }}">{{ beschikbaarheid.id }}</a>
+                    </td>
+                    <td>{{ beschikbaarheid.docentId | capitalize }}</td>
+                    <td>{% if beschikbaarheid.begin %}{{ beschikbaarheid.begin|date('d-m-Y') }}{% endif %}</td>
+                    <td>{% if beschikbaarheid.begin %}{{ beschikbaarheid.begin|date('H:i:s') }}{% endif %}</td>
+                    <td>{{ beschikbaarheid.duur }} minuten</td>
+                    <td>
+                        <a href="{{ path('beschikbaarheid_show', { 'id': beschikbaarheid.id }) }}"
+                           class="btn btn-info">show</a>
+                        <a href="{{ path('beschikbaarheid_edit', { 'id': beschikbaarheid.id }) }}"
+                           class="btn btn-primary">edit</a>
+                    </td>
+                </tr>
+            {% endif %}
+        {% endfor %}
+        </tbody>
+
+        {#{% if is_granted("ROLE_SUPER_ADMIN") %}#}
+            {#<table class="table table-striped">#}
+            {#<thead>#}
+            {#<tr>#}
+                {#<th>Id</th>#}
+                {#<th>Docent</th>#}
+                {#<th>Datum</th>#}
+                {#<th>Tijd</th>#}
+                {#<th>Duur</th>#}
+                {#<th>Actions</th>#}
+            {#</tr>#}
+            {#</thead>#}
+            {#<tbody>#}
+            {#{% for beschikbaarheid in beschikbaarheids %}#}
+                {#<tr>#}
+                    {#<td>#}
+                        {#<a href="{{ path('beschikbaarheid_show', { 'id': beschikbaarheid.id }) }}">{{ beschikbaarheid.id }}</a>#}
+                    {#</td>#}
+                    {#<td>{{ beschikbaarheid.docentId | capitalize }}</td>#}
+                    {#<td>{% if beschikbaarheid.begin %}{{ beschikbaarheid.begin|date('d-m-Y') }}{% endif %}</td>#}
+                    {#<td>{% if beschikbaarheid.begin %}{{ beschikbaarheid.begin|date('H:i:s') }}{% endif %}</td>#}
+                    {#<td>{{ beschikbaarheid.duur }} minuten</td>#}
+                    {#<td>#}
+                        {#<a href="{{ path('beschikbaarheid_show', { 'id': beschikbaarheid.id }) }}"#}
+                           {#class="btn btn-info">show</a>#}
+                        {#<a href="{{ path('beschikbaarheid_edit', { 'id': beschikbaarheid.id }) }}"#}
+                           {#class="btn btn-primary">edit</a>#}
+                    {#</td>#}
+                {#</tr>#}
+                {#</tbody>#}
+                {#</table>#}
+            {#{% endfor %}#}
+
+        {#{% endif %}#}
+    </table>
+
+    <a class="btn btn-success" href="{{ path('beschikbaarheid_new') }}">
+        Nieuwe beschikbaarheid aanmaken <i class="fa fa-plus-square"></i></a>    {% else %}
+
+{% endif %}
+{% endblock %}

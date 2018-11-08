@@ -1,0 +1,21 @@
+{% extends '@Intake/base.html.twig' %}
+
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% block body %}
+    <h1 class="text-center topspace">Maak uw account aan</h1>
+        {{ form_start(form, {'method': 'post', 'action': path('fos_user_registration_register'), 'attr': {'class': 'fos_user_registration_register reg'}}) }}
+        {{ form_widget(form) }}
+
+        <div>
+            <h3 class="text-center">Alle velden zijn verplicht!<br> Dit is nodig om een intake te plannen!</h3>
+
+            <input type="submit"
+                   class="btn btn-lg btn-primary btn-block subm"
+                   id="_submit"
+                   name="_submit"
+                   value="{{ 'Registreer'|trans }}" />
+        </div>
+        {{ form_end(form) }}
+
+{% endblock %}

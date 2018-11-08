@@ -1,0 +1,36 @@
+{% extends '@Intake/base.html.twig' %}
+
+{% block body %}    {% if is_granted('ROLE_ADMIN') %}
+    <a class="btn btn-success newitem" href="{{ path('opleiding_new') }}">
+        Nieuwe opleiding aanmaken <i class="fa fa-plus-square"></i></a>
+    <h1>Opleidingen overzicht</h1>
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Opleidingsnaam</th>
+            <th>Afdeling</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for opleiding in opleidings %}
+            <tr>
+                <td><a href="{{ path('opleiding_show', { 'id': opleiding.id }) }}">{{ opleiding.id }}</a></td>
+                <td>{{ opleiding.naam }}</td>
+                <td>{{ opleiding.afdelingId }}</td>
+                <td>
+                    <a href="{{ path('opleiding_show', { 'id': opleiding.id }) }}" class="btn btn-info">show</a>
+                    <a href="{{ path('opleiding_edit', { 'id': opleiding.id }) }}" class="btn btn-primary">edit</a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a class="btn btn-success" href="{{ path('opleiding_new') }}">
+        Nieuwe opleiding aanmaken <i class="fa fa-plus-square"></i></a>    {% else %}
+
+{% endif %}
+{% endblock %}

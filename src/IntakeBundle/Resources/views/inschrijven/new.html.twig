@@ -1,0 +1,56 @@
+{% extends '@Intake/base.html.twig' %}
+
+{% block body %}
+    {% if app.user %}
+        <h1>Schrijf je nu in!</h1>
+        <table class="table table-user-information" style="width: 40%;">
+            <th>
+                Persoonlijke gegevens:
+
+            </th>
+            <th>
+                <a href="{{ path('profiel_edit', {'id': app.user.id}) }}">Klik hier om gegevens te
+                    wijzigen</a>
+            </th>
+            <tbody>
+            <tr>
+                <td>Voornaam</td>
+                <td>{{ app.user.voornaam }}</td>
+            </tr>
+            <tr>
+                <td>Achternaam</td>
+                <td>{{ app.user.achternaam }}</td>
+            </tr>
+            <tr>
+                <td>Woonplaats</td>
+                <td>{{ app.user.woonplaats }}</td>
+            </tr>
+            <tr>
+                <td>Huisnummer</td>
+                <td>{{ app.user.huisnummer }}</td>
+            </tr>
+            <tr>
+                <td>Postcode</td>
+                <td>{{ app.user.postcode }}</td>
+            </tr>
+            <tr>
+                <td>Email</td>
+                <td>{{ app.user.email }}</td>
+            </tr>
+            <tr>
+                <td>Telefoon nummer</td>
+                <td>{{ app.user.telefoonnummer }}</td>
+            </tr>
+            </tbody>
+        </table>
+
+        {{ form_start(form) }}
+        {{ form_widget(form) }}
+
+
+        <input type="submit" value="Bevestig inschrijving" class="btn btn-success saveit"/>
+        {{ form_end(form) }}
+    {% else %}
+        <h1 class="text-center">U dient eerst in te loggen voordat u kunt inschrijven!</h1>
+    {% endif %}
+{% endblock %}

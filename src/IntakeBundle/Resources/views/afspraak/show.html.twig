@@ -1,0 +1,39 @@
+{% extends '@Intake/base.html.twig' %}
+
+{% block body %}
+    {% if is_granted('ROLE_ADMIN') or app.user == afspraak.userId %}
+        <h1>Afspraak</h1>
+
+        <table class="table table-striped">
+            <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ afspraak.id }}</td>
+            </tr>
+            <tr>
+                <th>Gebruiker</th>
+                <td>{{ afspraak.userId }}</td>
+            </tr>
+            <tr>
+                <th>Locatie</th>
+                <td>{{ afspraak.locatieId }}</td>
+            </tr>
+            <tr>
+                <th>Opleiding</th>
+                <td>{{ afspraak.opleidingId }}</td>
+            </tr>
+            <tr>
+                <th>Intaketijd & datum</th>
+                <td>{{ afspraak.beschikbaarheidId }}</td>
+            </tr>
+            </tbody>
+        </table>
+
+        <a href="{{ path('afspraak_edit', { 'id': afspraak.id }) }}" class="btn btn-primary">Edit</a>
+        {{ form_start(delete_form) }}
+        <input type="submit" value="Delete" class="btn btn-danger">
+        {{ form_end(delete_form) }}
+    {% else %}
+
+    {% endif %}
+{% endblock %}

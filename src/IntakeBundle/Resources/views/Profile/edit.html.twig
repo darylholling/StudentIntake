@@ -1,0 +1,13 @@
+{% extends '@Intake/base.html.twig' %}
+
+{% block body %}
+            <h1>Profiel Updaten</h1>
+
+        {{ form_start(edit_form) }}
+        {{ form_widget(edit_form) }}
+            <input type="submit" value="Save" class="btn btn-success saveit"/>
+        {{ form_end(edit_form) }}
+
+            <a href="{{ path('profile_show', { 'id': app.user.id }) }}" class="btn btn-info pull-right">Profiel overzicht</a><br>
+
+{% endblock %}

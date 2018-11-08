@@ -1,0 +1,40 @@
+{% extends '@Intake/base.html.twig' %}
+
+{% block body %}    {% if is_granted('ROLE_ADMIN') %}
+    <h1>Beschikbaarheid</h1>
+
+    <table class="table table-striped">
+        <tbody>
+        <tr>
+            <th>Id</th>
+            <td>{{ beschikbaarheid.id }}</td>
+        </tr>
+        <tr>
+            <th>Docent</th>
+            <td>{{ beschikbaarheid.docentId |capitalize }}</td>
+        </tr>
+        <tr>
+            <th>Datum</th>
+            <td>{% if beschikbaarheid.begin %}{{ beschikbaarheid.begin|date('d-m-Y') }}{% endif %}</td>
+        </tr>
+        <tr>
+            <th>Tijd</th>
+            <td>{% if beschikbaarheid.begin %}{{ beschikbaarheid.begin|date('H:i:s') }}{% endif %}</td>
+        </tr>
+        <tr>
+            <th>Duur</th>
+            <td>{{ beschikbaarheid.duur }} minuten</td>
+        </tr>
+        </tbody>
+    </table>
+    {% if (beschikbaarheid.docentId == app.user) %}
+
+        <a href="{{ path('beschikbaarheid_edit', { 'id': beschikbaarheid.id }) }}" class="btn btn-primary">Edit</a>
+
+    {{ form_start(delete_form) }}
+    <input type="submit" value="Delete" class="btn btn-danger">
+    {{ form_end(delete_form) }}    {% else %}
+    {% endif %}
+
+{% endif %}
+{% endblock %}

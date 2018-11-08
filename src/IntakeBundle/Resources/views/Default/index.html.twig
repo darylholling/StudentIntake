@@ -1,0 +1,55 @@
+{% extends '@Intake/base.html.twig' %}
+{% block body %}
+    {% if is_granted("ROLE_SUPER_ADMIN") %}
+        <div class="text-center">
+            <div>
+                <img src="{{ asset('bundles/intake/images/logo.png') }}" class="text-center rijnlandlogo rijnlandimg">
+            </div>
+        </div>
+        <h1 class="text-center">Goedendag</h1>
+        <h2 class="text-center">Er zijn vandaag X nieuwe aanmeldingen.</h2>
+    {% else %}
+        <div class="container">
+        <div class="row">
+            <h1 class="text-center">Welkom op de website van MBO<b>Rijn</b><i style="color:red;">//</i><b>land</b>
+                {% if app.user %} {{ app.user | capitalize }}{% endif %}
+            </h1>
+        </div>
+        <div class="row">
+            {% if app.user %}
+                <a href="{{ path('inschrijven_new') }}" class="text-center" style="color: black;">
+                <h1 style="margin-top: 10%;">Klik hier om je in te schrijven voor je favoriete opleiding!</h1>
+            {% else %}
+                </a>
+                <div class="text-center" style="color: black;">
+                    <h1 style="margin-top: 10%;">Login of registreer om je in te schrijven<br> voor je favoriete opleiding!</h1>
+                </div>
+            {% endif %}
+        </div>
+        {% if app.user %}
+
+        {% else %}
+            <div class="row">
+                <div class="col-md-3">
+                </div>
+                <div class="col-md-2">
+                    <a style="margin-top: 50%;" href="{{ path('fos_user_security_login') }}" class="btn btn-primary">Klik
+                        hier
+                        om in te
+                        loggen!</a>
+                </div>
+                <div class="col-md-2">
+                </div>
+                <div class="col-md-2">
+                    <a style="margin-top: 50%;" href="{{ path('fos_user_registration_register') }}"
+                       class="btn btn-primary">Klik
+                        hier om
+                        te registeren!</a>
+                </div>
+                <div class="col-md-3">
+                </div>
+            </div>
+            </div>
+        {% endif %}
+    {% endif %}
+{% endblock %}
